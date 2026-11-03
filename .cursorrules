@@ -1,0 +1,16 @@
+# Cursor & AI Assistant Operating Rules
+
+You are working on the Interactive 3D Virtual Science Laboratory Platform.
+The mission of this repository is a complete, uncompromising clean-room reverse engineering of PraxiLabs (and Labster-class) virtual science simulations.
+
+Before writing or editing any code, you MUST review:
+1. AGENTS.md
+2. PRAXILABS_REVERSE_ENGINEERING_SPECIFICATION.md
+
+Key mandates:
+- No cosmetic shortcuts or fake triggers.
+- Enforce full university-grade scientific protocols (PPE, pipetting, rinsing, 3 concordant trials, data calculations).
+- Variable-flow physics, Web Audio API sound synthesis, spatial constraint sockets.
+- Free camera orbit/pan/zoom without rubber-banding locks.
+- 100% TypeScript type safety and clean `npm run build` verification.
+

@@ -1,16 +1,20 @@
 import React from 'react';
-import { RotateCcw, Award, Clock, Beaker, ShieldCheck } from 'lucide-react';
+import { RotateCcw, Award, Clock, Beaker, ShieldCheck, Volume2, VolumeX } from 'lucide-react';
 
 interface LabHeaderProps {
   score: number;
   elapsedSeconds: number;
   onReset: () => void;
+  isVoiceMuted?: boolean;
+  onToggleVoice?: () => void;
 }
 
 export const LabHeader: React.FC<LabHeaderProps> = ({
   score,
   elapsedSeconds,
   onReset,
+  isVoiceMuted = false,
+  onToggleVoice,
 }) => {
   const formatTime = (secs: number) => {
     const mins = Math.floor(secs / 60);
@@ -46,6 +50,17 @@ export const LabHeader: React.FC<LabHeaderProps> = ({
           <Award size={16} className="text-amber-400" />
           <span className="mono-stat font-bold text-emerald-400">{score} pts</span>
         </div>
+
+        {onToggleVoice && (
+          <button
+            className={`btn-secondary ${isVoiceMuted ? 'opacity-60' : ''}`}
+            onClick={onToggleVoice}
+            title={isVoiceMuted ? 'Unmute Laboratory Instructor Voice' : 'Mute Instructor Voice'}
+          >
+            {isVoiceMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+            <span>{isVoiceMuted ? 'Voice Off' : 'Voice On'}</span>
+          </button>
+        )}
 
         <button className="btn-secondary" onClick={onReset} title="Reset Experiment">
           <RotateCcw size={16} />

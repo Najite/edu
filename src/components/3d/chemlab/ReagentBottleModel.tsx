@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { useGLTF } from '@react-three/drei';
+import * as THREE from 'three';
 
 interface ReagentBottleModelProps {
   position?: [number, number, number];
@@ -10,7 +11,7 @@ interface ReagentBottleModelProps {
 
 export const ReagentBottleModel: React.FC<ReagentBottleModelProps> = ({
   position = [0, 0, 0],
-  rotation = [0, 0, 0],
+  rotation = [-Math.PI / 2, 0, 0],
   scale = 1.0,
   amber = true,
 }) => {
@@ -18,7 +19,17 @@ export const ReagentBottleModel: React.FC<ReagentBottleModelProps> = ({
     ? '/models/chemlab/reagent_bottle_amber.glb'
     : '/models/chemlab/reagent_bottle_clear.glb';
   const { scene } = useGLTF(modelPath);
-  const clone = useMemo(() => scene.clone(), [scene]);
+
+  const clone = useMemo(() => {
+    const c = scene.clone(true);
+    c.traverse((child) => {
+      if (child instanceof THREE.Mesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+    return c;
+  }, [scene]);
 
   return (
     <primitive
@@ -26,12 +37,9 @@ export const ReagentBottleModel: React.FC<ReagentBottleModelProps> = ({
       position={position}
       rotation={rotation}
       scale={typeof scale === 'number' ? [scale, scale, scale] : scale}
-      castShadow
-      receiveShadow
     />
   );
 };
 
 useGLTF.preload('/models/chemlab/reagent_bottle_amber.glb');
 useGLTF.preload('/models/chemlab/reagent_bottle_clear.glb');
-
